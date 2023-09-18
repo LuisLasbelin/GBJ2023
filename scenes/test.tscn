@@ -1,8 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw7yxq8tljb2u"]
+[gd_scene load_steps=6 format=3 uid="uid://dw7yxq8tljb2u"]
 
 [ext_resource type="Script" path="res://behaviour/CubeManager.gd" id="1_n4ko4"]
+[ext_resource type="Shader" path="res://shader/CuboTestA.gdshader" id="2_jx5fc"]
+[ext_resource type="Texture2D" uid="uid://dwtvi0jyx1tvv" path="res://sprites/cubitoGrande.png" id="3_qpt68"]
+[ext_resource type="Texture2D" uid="uid://bnspntyukok68" path="res://icon.svg" id="4_ffg2l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmck7"]
+shader = ExtResource("2_jx5fc")
+shader_parameter/mockupCheck = false
+shader_parameter/colorLuz = Color(1, 0.909, 0.745, 1)
+shader_parameter/colorSombra = Color(0.552, 0.619, 0.745, 1)
+shader_parameter/colorLinea = Color(0.376, 0.09, 0.113, 1)
+shader_parameter/colorFondo = Color(0.788, 0.831, 0.701, 1)
+shader_parameter/resolucion = Vector2(160, 144)
+shader_parameter/cubitoDimensiones = Vector2(23, 26)
+shader_parameter/activo = PackedInt32Array(1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/cubito = ExtResource("3_qpt68")
 
 [node name="Node2D" type="Node2D"]
 
 [node name="CubeManager" type="Node2D" parent="."]
 script = ExtResource("1_n4ko4")
+
+[node name="Box" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_gmck7")
+position = Vector2(80, 72)
+scale = Vector2(1.25, 1.125)
+texture = ExtResource("4_ffg2l")

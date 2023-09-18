@@ -23,33 +23,40 @@ func rotate_z():
 	var tmp = PackedVector3Array()
 	
 	for i in self.blocks.size():
-		var node = blocks[i];
-		var x = node.x;
-		var y = node.y;
-		node.x = x * cos(PI/2) - y * sin(PI/2);
-		node.y = y * cos(PI/2) + x * sin(PI/2);
+		var node = blocks[i]
+		var x = node.x
+		var y = node.y
+		node.x = round(x * cos(PI/2) - y * sin(PI/2))
+		node.y = round(y * cos(PI/2) + x * sin(PI/2))
 		tmp.push_back(node)
 	
-	self.blocks = tmp
+	return Piece.new(self.size, self.depth, tmp)
 
 
-func rotate_x():
+func rotate_y() -> Piece:
 	var tmp = PackedVector3Array()
 	
 	for i in self.blocks.size():
-		var node = self.blocks[i];
-		var z = node.z;
-		var y = node.y;
-		node.z = z * cos(PI/2) + y * sin(PI/2);
-		node.y = y * cos(PI/2) - z * sin(PI/2);
+		var node = self.blocks[i]
+		var x = node.x
+		var z = node.z
+		node.x = round(x * cos(PI/2) + z * sin(PI/2));
+		node.z = round(z * cos(PI/2) - x * sin(PI/2));
 		tmp.push_back(node)
 	
-	self.blocks = tmp
+	return Piece.new(self.size,self.depth,tmp)
 
 
 func add_piece(piece: Piece):
 	for v in self.blocks:
-		if piece.has(v):
+		if piece.blocks.has(v):
 			return
 	# Add piece to blocks
 	self.blocks.append_array(piece.get_blocks())
+
+
+func is_full():
+	for v in vertices:
+		if not self.blocks.has(v):
+			return false
+	return true
