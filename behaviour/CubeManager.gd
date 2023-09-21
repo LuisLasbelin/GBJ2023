@@ -5,7 +5,6 @@ extends Node2D
 @onready var up_piece_sprite : Sprite2D = $"../SelectionUp"
 @onready var down_piece_sprite : Sprite2D = $"../SelectionDown"
 @onready var ui = $"../CanvasLayer"
-@onready var login = $"../Login"
 
 
 var levelsLoader : LevelsLoader = LevelsLoader.new()
@@ -121,5 +120,6 @@ func endGame():
 		# Next level
 		loadLevel()
 	else:
-		# End of the round
-		login.login_new_score(score)
+		# End of the game
+		find_parent("Main").score = score
+		find_parent("Main").endGame()

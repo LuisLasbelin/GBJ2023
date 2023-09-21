@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6j26xgthrqjc"]
+
+[ext_resource type="PackedScene" uid="uid://bxkbx2ev5wcwm" path="res://scenes/game.tscn" id="1_otox3"]
+[ext_resource type="Script" path="res://behaviour/main.gd" id="1_vcg3q"]
+[ext_resource type="Script" path="res://behaviour/Login.gd" id="3_06joh"]
+[ext_resource type="Script" path="res://behaviour/SetNewScore.gd" id="4_6ia5s"]
+[ext_resource type="Script" path="res://behaviour/GetHighScores.gd" id="5_j44e4"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_vcg3q")
+
+[node name="Screen" type="Node" parent="."]
+
+[node name="Game" parent="Screen" instance=ExtResource("1_otox3")]
+
+[node name="Login" type="HTTPRequest" parent="."]
+script = ExtResource("3_06joh")
+
+[node name="SetNewScore" type="HTTPRequest" parent="."]
+script = ExtResource("4_6ia5s")
+
+[node name="GetHighScores" type="HTTPRequest" parent="."]
+script = ExtResource("5_j44e4")
+
+[connection signal="request_completed" from="Login" to="." method="_on_login_request_completed"]
+[connection signal="request_completed" from="SetNewScore" to="SetNewScore" method="_on_request_completed"]
+[connection signal="request_completed" from="GetHighScores" to="." method="_on_get_high_scores_request_completed"]

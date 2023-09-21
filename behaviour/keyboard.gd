@@ -3,6 +3,9 @@ extends Node2D
 
 @onready var selector = $Selector
 @onready var name_label : Label = $CanvasLayer/Name
+@onready var bar = $Bar
+var name_curr_letter : int = 0
+@onready var login = $Login
 
 # Write a mapping for all the keyboard keys. 
 # Each key has a value equal to x*y based on the keyboard position.
@@ -50,3 +53,22 @@ func _unhandled_input(event):
 		newVector = Vector2(vectorLetra.x, vectorLetra.y+1)
 	newVector = Vector2(clamp(newVector.x,0,9-newVector.y), clamp(newVector.y,0,2))
 	selector.material.set_shader_parameter("despLetra", newVector)
+	# Add new letter
+	if event.is_action_pressed("a"):
+		for l in keyboard_map:
+			if keyboard_map[l] == newVector:
+				print(l)
+				if l == "enter":
+					# Enter the name and save it
+					find_parent("Main").username = name_label.text
+					find_parent("Main").set_new_highscore()
+				elif name_curr_letter < 3:
+					name_label.text[name_curr_letter] = l
+					name_curr_letter += 1
+
+	# Remove last letter
+	if event.is_action_pressed("b"):
+		if name_curr_letter > 0: name_curr_letter -= 1
+		name_label.text[name_curr_letter] = "-"
+	# Bar under letter equal current letter
+	bar.material.set_shader_parameter("posicion", name_curr_letter)

@@ -1,0 +1,108 @@
+[gd_scene load_steps=21 format=3 uid="uid://bxkbx2ev5wcwm"]
+
+[ext_resource type="Script" path="res://behaviour/CubeManager.gd" id="1_gjdp0"]
+[ext_resource type="Shader" path="res://shader/Malla.gdshader" id="2_py1lb"]
+[ext_resource type="Texture2D" uid="uid://dwtvi0jyx1tvv" path="res://sprites/cubitoGrande.png" id="3_8cdeh"]
+[ext_resource type="Texture2D" uid="uid://bnspntyukok68" path="res://icon.svg" id="4_qrqx1"]
+[ext_resource type="Shader" path="res://shader/PiezaMini.gdshader" id="5_b51d6"]
+[ext_resource type="Texture2D" uid="uid://c2yoivgy3w3we" path="res://sprites/cubitoMini.png" id="6_2s8r4"]
+[ext_resource type="Shader" path="res://shader/PiezaSelec.gdshader" id="7_8k5fg"]
+[ext_resource type="Texture2D" uid="uid://dnqmb37i6l5tv" path="res://sprites/cubitoPeque.png" id="8_sg0uw"]
+[ext_resource type="Shader" path="res://shader/Giroscopio.gdshader" id="9_fo6e8"]
+[ext_resource type="Texture2D" uid="uid://1ajuftp6mn02" path="res://sprites/giroscopio.png" id="10_68mld"]
+[ext_resource type="Script" path="res://scenes/UI.gd" id="11_oy0na"]
+[ext_resource type="Shader" path="res://shader/Keyboard.gdshader" id="12_n4hfl"]
+[ext_resource type="LabelSettings" uid="uid://ch2d5ulmsl7rv" path="res://fonts/small_text.tres" id="13_c1fgw"]
+[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="14_8i3db"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hfux6"]
+shader = ExtResource("2_py1lb")
+shader_parameter/resolucion = Vector2i(96, 96)
+shader_parameter/resolucionCubo = Vector2i(23, 26)
+shader_parameter/velScan = 4.0
+shader_parameter/estado = PackedInt32Array(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/cuboSprt = ExtResource("3_8cdeh")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_24ngy"]
+shader = ExtResource("5_b51d6")
+shader_parameter/estado = null
+shader_parameter/sprite = ExtResource("6_2s8r4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kw3l"]
+shader = ExtResource("7_8k5fg")
+shader_parameter/estado = PackedInt32Array(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/cuboSprt = ExtResource("8_sg0uw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s38oc"]
+shader = ExtResource("5_b51d6")
+shader_parameter/estado = null
+shader_parameter/sprite = ExtResource("6_2s8r4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ulwsm"]
+shader = ExtResource("9_fo6e8")
+shader_parameter/estado = 0
+shader_parameter/sprite = ExtResource("10_68mld")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fthd5"]
+shader = ExtResource("12_n4hfl")
+
+[node name="Game" type="Node2D"]
+
+[node name="CubeManager" type="Node2D" parent="."]
+script = ExtResource("1_gjdp0")
+
+[node name="Box" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_hfux6")
+position = Vector2(48, 48)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_qrqx1")
+
+[node name="SelectionUp" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_24ngy")
+position = Vector2(136, 32)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("4_qrqx1")
+
+[node name="Selected" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6kw3l")
+position = Vector2(136, 72)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("4_qrqx1")
+
+[node name="SelectionDown" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_s38oc")
+position = Vector2(136, 104)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("4_qrqx1")
+
+[node name="Giro" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ulwsm")
+position = Vector2(24, 112)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("4_qrqx1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("11_oy0na")
+
+[node name="ScoreTitle" type="Label" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_fthd5")
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 24.0
+text = "Score"
+label_settings = ExtResource("13_c1fgw")
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_fthd5")
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 160.0
+offset_bottom = 24.0
+text = "000"
+label_settings = ExtResource("13_c1fgw")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = ExtResource("14_8i3db")
+offset_right = 160.0
+offset_bottom = 144.0

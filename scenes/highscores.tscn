@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://7h258bjupht8"]
+
+[ext_resource type="Script" path="res://behaviour/highscores.gd" id="1_jxprt"]
+[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="1_u7lkj"]
+[ext_resource type="Shader" path="res://shader/Keyboard.gdshader" id="3_fr08m"]
+[ext_resource type="LabelSettings" uid="uid://ch2d5ulmsl7rv" path="res://fonts/small_text.tres" id="4_4itld"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adhho"]
+shader = ExtResource("3_fr08m")
+
+[node name="Highscores" type="Node2D"]
+script = ExtResource("1_jxprt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Container" type="ScrollContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = -8.0
+offset_bottom = 136.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_vertical_custom_step = 3.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+
+[node name="List" type="VBoxContainer" parent="CanvasLayer/Container"]
+custom_minimum_size = Vector2(140, 116.395)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_adhho")
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 88.0
+offset_bottom = 31.0
+text = "HIGHscores"
+label_settings = ExtResource("4_4itld")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = ExtResource("1_u7lkj")
+offset_right = 160.0
+offset_bottom = 144.0
+metadata/_edit_use_anchors_ = true
