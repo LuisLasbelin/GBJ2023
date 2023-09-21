@@ -47,12 +47,13 @@ func rotate_y() -> Piece:
 	return Piece.new(self.size,self.depth,tmp)
 
 
-func add_piece(piece: Piece):
-	for v in self.blocks:
-		if piece.blocks.has(v):
-			return
+func add_piece(piece: Piece) -> bool:
+	for v in piece.get_blocks():
+		if self.blocks.has(v):
+			return false
 	# Add piece to blocks
 	self.blocks.append_array(piece.get_blocks())
+	return true
 
 
 func is_full():
