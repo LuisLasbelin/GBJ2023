@@ -16,16 +16,15 @@ script = ExtResource("1_jxprt")
 [node name="Container" type="ScrollContainer" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 8.0
+offset_left = 6.0
 offset_top = 16.0
-offset_right = -8.0
-offset_bottom = 136.0
+offset_right = -6.0
+offset_bottom = 128.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-scroll_vertical_custom_step = 3.0
+scroll_vertical_custom_step = 16.0
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 0
 
 [node name="List" type="VBoxContainer" parent="CanvasLayer/Container"]
 custom_minimum_size = Vector2(140, 116.395)
