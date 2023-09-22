@@ -41,7 +41,9 @@ func endGame():
 
 
 func check_if_highscore(scores):
-	if scores.size() < 20: new_highscore()
+	if scores.size() < 20: 
+		new_highscore()
+		return
 	for s in scores:
 		if s["value"] < score:
 			print(score, " is higher than ", s["value"], " by ", s["name"])
