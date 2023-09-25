@@ -10,11 +10,13 @@ var game_scene = preload("res://scenes/game.tscn")
 var keyboard_scene = preload("res://scenes/keyboard.tscn")
 var endgame_scene = preload("res://scenes/end_game.tscn")
 var highscores_scene = preload("res://scenes/highscores.tscn")
+var pause_scene = preload("res://scenes/menu.tscn")
 
 var score = 0
 var username = ""
 var access_token = ""
 var highscores = {}
+var game_paused = false
 
 
 func _ready():
@@ -25,6 +27,18 @@ func start_game():
 	clear_screen()
 	var game_instance = game_scene.instantiate()
 	screen.add_child(game_instance)
+	game_paused = false
+
+
+func open_pause():
+	var pause_instance = pause_scene.instantiate()
+	screen.add_child(pause_instance)
+	game_paused = true
+
+
+func close_pause():
+	game_paused = false
+	get_tree().get_first_node_in_group("pause").queue_free()
 
 
 func clear_screen():

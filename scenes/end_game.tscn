@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://dfquw5vcpuhdh"]
+[gd_scene load_steps=9 format=3 uid="uid://dfquw5vcpuhdh"]
 
-[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="1_2xjuy"]
 [ext_resource type="Script" path="res://behaviour/end_game.gd" id="1_da6yi"]
 [ext_resource type="Shader" path="res://shader/Keyboard.gdshader" id="1_necyc"]
 [ext_resource type="LabelSettings" uid="uid://bmr7d1y2vdnfc" path="res://fonts/large_text.tres" id="2_j46pc"]
@@ -75,11 +74,6 @@ text = "Loading"
 label_settings = ExtResource("2_wk42k")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = ExtResource("1_2xjuy")
-offset_right = 160.0
-offset_bottom = 144.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "loading"

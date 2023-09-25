@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf3emmgh44s0k"]
+[gd_scene load_steps=16 format=3 uid="uid://bf3emmgh44s0k"]
 
 [ext_resource type="Script" path="res://behaviour/keyboard.gd" id="1_f1yu7"]
 [ext_resource type="Shader" path="res://shader/Keyboard.gdshader" id="1_ug5p1"]
@@ -7,8 +7,9 @@
 [ext_resource type="Shader" path="res://shader/SelectorTexto.gdshader" id="4_hprkq"]
 [ext_resource type="Texture2D" uid="uid://d1nbi0k1jqseu" path="res://sprites/selectorLetra.png" id="5_4perg"]
 [ext_resource type="Texture2D" uid="uid://bnspntyukok68" path="res://icon.svg" id="5_yhu2m"]
+[ext_resource type="Texture2D" uid="uid://bg6hofm4twmi7" path="res://sprites/marcoNombre.png" id="7_as7j3"]
 [ext_resource type="Shader" path="res://shader/BarritaTexto.gdshader" id="7_g1hgb"]
-[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="9_x0ekx"]
+[ext_resource type="Shader" path="res://shader/marcoNombre.gdshader" id="7_hcn2s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7f7pj"]
 shader = ExtResource("4_hprkq")
@@ -19,6 +20,9 @@ shader_parameter/sprite = ExtResource("5_4perg")
 shader = ExtResource("7_g1hgb")
 shader_parameter/posicion = 0.0
 shader_parameter/velocidad = 1.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8exoy"]
+shader = ExtResource("7_hcn2s")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seg5x"]
 shader = ExtResource("1_ug5p1")
@@ -45,6 +49,12 @@ position = Vector2(80, 32)
 scale = Vector2(0.375, 0.125)
 texture = ExtResource("5_yhu2m")
 
+[node name="MarcoNombre" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_8exoy")
+position = Vector2(80, 32)
+texture = ExtResource("7_as7j3")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Keyboard" type="Label" parent="CanvasLayer"]
@@ -70,8 +80,3 @@ text = "---"
 label_settings = ExtResource("2_oy4q8")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = ExtResource("9_x0ekx")
-offset_right = 160.0
-offset_bottom = 144.0

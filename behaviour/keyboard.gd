@@ -65,7 +65,7 @@ func _unhandled_input(event):
 				elif name_curr_letter < 3:
 					name_label.text[name_curr_letter] = l
 					name_curr_letter += 1
-
+					find_parent("Main").find_child("ControlSound").play()
 	# Remove last letter
 	if event.is_action_pressed("b"):
 		if name_curr_letter > 0: name_curr_letter -= 1

@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6j26xgthrqjc"]
+[gd_scene load_steps=9 format=3 uid="uid://b6j26xgthrqjc"]
 
 [ext_resource type="Script" path="res://behaviour/main.gd" id="1_vcg3q"]
 [ext_resource type="Script" path="res://behaviour/Login.gd" id="3_06joh"]
 [ext_resource type="Script" path="res://behaviour/SetNewScore.gd" id="4_6ia5s"]
+[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="5_i4b2n"]
 [ext_resource type="Script" path="res://behaviour/GetHighScores.gd" id="5_j44e4"]
+[ext_resource type="AudioStream" uid="uid://bofi16s3jc8yy" path="res://sound/select.wav" id="6_hsect"]
+[ext_resource type="AudioStream" uid="uid://dtb5bsipyncw6" path="res://sound/good.wav" id="7_jlrps"]
+[ext_resource type="AudioStream" uid="uid://bq0tsm0qgn35c" path="res://sound/win.wav" id="8_w05ef"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_vcg3q")
@@ -21,6 +25,26 @@ script = ExtResource("5_j44e4")
 
 [node name="GetList" type="HTTPRequest" parent="."]
 script = ExtResource("5_j44e4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = ExtResource("5_i4b2n")
+offset_right = 160.0
+offset_bottom = 144.0
+
+[node name="ControlSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_hsect")
+bus = &"SFX"
+
+[node name="GoodSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_jlrps")
+bus = &"SFX"
+
+[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_w05ef")
+bus = &"SFX"
 
 [connection signal="request_completed" from="Login" to="." method="_on_login_request_completed"]
 [connection signal="request_completed" from="SetNewScore" to="." method="_on_set_new_score_request_completed"]

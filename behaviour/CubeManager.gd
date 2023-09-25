@@ -5,8 +5,13 @@ extends Node2D
 @onready var up_piece_sprite : Sprite2D = $"../SelectionUp"
 @onready var down_piece_sprite : Sprite2D = $"../SelectionDown"
 @onready var ui = $"../CanvasLayer"
+@onready var rotation_controls = $"../RotationControls"
+@onready var controls_text = $"../CanvasLayer/Controls"
+var sound_control : AudioStreamPlayer2D
+var sound_good : AudioStreamPlayer2D
+var sound_win : AudioStreamPlayer2D
 
-
+var help_enabled : bool = true
 var levelsLoader : LevelsLoader = LevelsLoader.new()
 var current_level : int = 0
 var pieceProjectionApi : PieceProjectionApi = PieceProjectionApi.new()
@@ -23,6 +28,9 @@ var time : float = 0
 func _ready():
 	current_level = 0
 	loadLevel()
+	sound_control = find_parent("Main").find_child("ControlSound")
+	sound_good = find_parent("Main").find_child("GoodSound")
+	sound_win = find_parent("Main").find_child("WinSound")
 
 
 func _process(delta):
@@ -45,35 +53,49 @@ func loadLevel():
 
 
 func _unhandled_input(event):
+	if event.is_action_pressed("start"):
+		if find_parent("Main").game_paused:
+			find_parent("Main").close_pause()
+			return
+		find_parent("Main").open_pause()
+		return
+	if find_parent("Main").game_paused: return
 	if rotating:
 		if event.is_action_pressed("left"):
 			m = m.rotate_z()
 			refresh_shader_in_block()
+			sound_control.play()
 		if event.is_action_pressed("right"):
 			m = m.rotate_z()
 			m = m.rotate_z()
 			m = m.rotate_z()
 			refresh_shader_in_block()
+			sound_control.play()
 		if event.is_action_pressed("up"):
 			m = m.rotate_y()
 			refresh_shader_in_block()
+			sound_control.play()
 		if event.is_action_pressed("down"):
 			m = m.rotate_y()
 			m = m.rotate_y()
 			m = m.rotate_y()
 			refresh_shader_in_block()
+			sound_control.play()
 	elif available_pieces.size() > 0:
 		if event.is_action_pressed("down"):
 			selected_index = clamp(selected_index + 1, 0, available_pieces.size()-1)
 			selected_piece = available_pieces[selected_index]
 			refresh_shader_in_block()
+			sound_control.play()
 		if event.is_action_pressed("up"):
 			selected_index = clamp(selected_index - 1, 0, available_pieces.size()-1)
 			selected_piece = available_pieces[selected_index]
 			refresh_shader_in_block()
+			sound_control.play()
 		if event.is_action_pressed("a"):
 			if not m.add_piece(selected_piece): return
 			available_pieces.remove_at(selected_index)
+			sound_good.play()
 			if available_pieces.size() > 0:
 				# For when the chosen piece is the last one
 				if selected_index > available_pieces.size()-1:
@@ -82,12 +104,17 @@ func _unhandled_input(event):
 				selected_piece = available_pieces[selected_index]
 			else:
 				selected_piece = Piece.new()
-				endGame()
+				endLevel()
 			refresh_shader_in_block()
 	if event.is_action_pressed("b"):
 		rotating = true
+		if help_enabled: rotation_controls.visible = true
 	if event.is_action_released("b"):
 		rotating = false
+		rotation_controls.visible = false
+	if event.is_action_pressed("select"):
+		controls_text.visible = !controls_text.visible
+		help_enabled = !help_enabled
 
 
 func refresh_shader_in_block():
@@ -111,11 +138,12 @@ func refresh_shader_in_block():
 	# ------------------------------------------------
 
 
-func endGame():
+func endLevel():
 	print("You win!")
 	current_level += 1
 	score += round((1/time) * 10000)
 	ui.updateScore(score)
+	sound_win.play()
 	if levelsLoader.getLevelsSize() > current_level:
 		# Next level
 		loadLevel()

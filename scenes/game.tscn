@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bxkbx2ev5wcwm"]
+[gd_scene load_steps=28 format=3 uid="uid://bxkbx2ev5wcwm"]
 
 [ext_resource type="Script" path="res://behaviour/CubeManager.gd" id="1_gjdp0"]
 [ext_resource type="Shader" path="res://shader/Malla.gdshader" id="2_py1lb"]
@@ -10,10 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://dnqmb37i6l5tv" path="res://sprites/cubitoPeque.png" id="8_sg0uw"]
 [ext_resource type="Shader" path="res://shader/Giroscopio.gdshader" id="9_fo6e8"]
 [ext_resource type="Texture2D" uid="uid://1ajuftp6mn02" path="res://sprites/giroscopio.png" id="10_68mld"]
-[ext_resource type="Script" path="res://scenes/UI.gd" id="11_oy0na"]
+[ext_resource type="Script" path="res://behaviour/UI.gd" id="11_mxii7"]
+[ext_resource type="Texture2D" uid="uid://562ax8aiwuve" path="res://sprites/flechaAbajo.png" id="11_yb4q7"]
 [ext_resource type="Shader" path="res://shader/Keyboard.gdshader" id="12_n4hfl"]
+[ext_resource type="Texture2D" uid="uid://c6wax3w6h5ang" path="res://sprites/flechaArriba.png" id="12_tnlrr"]
 [ext_resource type="LabelSettings" uid="uid://ch2d5ulmsl7rv" path="res://fonts/small_text.tres" id="13_c1fgw"]
-[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="14_8i3db"]
+[ext_resource type="Texture2D" uid="uid://cgfs6fb6hvpg1" path="res://sprites/flechaDerecha.png" id="13_k3dfv"]
+[ext_resource type="Texture2D" uid="uid://buw6hnf1y23ri" path="res://sprites/flechaIzquierda.png" id="14_n8o7t"]
+[ext_resource type="AudioStream" uid="uid://bofi16s3jc8yy" path="res://sound/select.wav" id="14_r4uio"]
+[ext_resource type="AudioStream" uid="uid://dtb5bsipyncw6" path="res://sound/good.wav" id="15_a73jk"]
+[ext_resource type="AudioStream" uid="uid://bq0tsm0qgn35c" path="res://sound/win.wav" id="16_qnd68"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hfux6"]
 shader = ExtResource("2_py1lb")
@@ -46,6 +52,9 @@ shader_parameter/sprite = ExtResource("10_68mld")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fthd5"]
 shader = ExtResource("12_n4hfl")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tm6va"]
+shader = ExtResource("12_n4hfl")
+
 [node name="Game" type="Node2D"]
 
 [node name="CubeManager" type="Node2D" parent="."]
@@ -53,7 +62,7 @@ script = ExtResource("1_gjdp0")
 
 [node name="Box" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_hfux6")
-position = Vector2(48, 48)
+position = Vector2(48, 56)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("4_qrqx1")
 
@@ -77,12 +86,31 @@ texture = ExtResource("4_qrqx1")
 
 [node name="Giro" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ulwsm")
-position = Vector2(24, 112)
+position = Vector2(24, 120)
 scale = Vector2(0.375, 0.375)
 texture = ExtResource("4_qrqx1")
 
+[node name="RotationControls" type="Node2D" parent="."]
+visible = false
+
+[node name="FlechaAbajo" type="Sprite2D" parent="RotationControls"]
+position = Vector2(80, 80)
+texture = ExtResource("11_yb4q7")
+
+[node name="FlechaArriba" type="Sprite2D" parent="RotationControls"]
+position = Vector2(80, 88)
+texture = ExtResource("12_tnlrr")
+
+[node name="FlechaDerecha" type="Sprite2D" parent="RotationControls"]
+position = Vector2(80, 80)
+texture = ExtResource("13_k3dfv")
+
+[node name="FlechaIzquierda" type="Sprite2D" parent="RotationControls"]
+position = Vector2(80, 80)
+texture = ExtResource("14_n8o7t")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-script = ExtResource("11_oy0na")
+script = ExtResource("11_mxii7")
 
 [node name="ScoreTitle" type="Label" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_fthd5")
@@ -92,6 +120,7 @@ offset_right = 48.0
 offset_bottom = 24.0
 text = "Score"
 label_settings = ExtResource("13_c1fgw")
+metadata/_edit_use_anchors_ = true
 
 [node name="Score" type="Label" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_fthd5")
@@ -101,8 +130,26 @@ offset_right = 160.0
 offset_bottom = 24.0
 text = "000"
 label_settings = ExtResource("13_c1fgw")
+metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = ExtResource("14_8i3db")
-offset_right = 160.0
-offset_bottom = 144.0
+[node name="Controls" type="Label" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_tm6va")
+offset_left = 48.0
+offset_top = 112.0
+offset_right = 120.0
+offset_bottom = 138.0
+text = "B - rotate
+A - place"
+label_settings = ExtResource("13_c1fgw")
+
+[node name="ControlSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_r4uio")
+bus = &"SFX"
+
+[node name="GoodSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_a73jk")
+bus = &"SFX"
+
+[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_qnd68")
+bus = &"SFX"

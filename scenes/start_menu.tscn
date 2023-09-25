@@ -1,0 +1,78 @@
+[gd_scene load_steps=20 format=3 uid="uid://dbe8qdenyesj0"]
+
+[ext_resource type="Shader" path="res://shader/TituloBack.gdshader" id="1_cunm4"]
+[ext_resource type="Script" path="res://behaviour/start_menu.gd" id="1_uhk53"]
+[ext_resource type="Texture2D" uid="uid://bnspntyukok68" path="res://icon.svg" id="2_6lwu1"]
+[ext_resource type="Shader" path="res://shader/TituloAnimeishun.gdshader" id="3_lql01"]
+[ext_resource type="Texture2D" uid="uid://djgkewujmors8" path="res://sprites/tituloB.png" id="4_jd26o"]
+[ext_resource type="Texture2D" uid="uid://ds6vjoephchmd" path="res://sprites/tituloC1.png" id="5_dgu5b"]
+[ext_resource type="Texture2D" uid="uid://bhaf2dgo5s2x7" path="res://sprites/tituloC2.png" id="6_tfojw"]
+[ext_resource type="Texture2D" uid="uid://c2d1udwb30gt4" path="res://sprites/tituloI.png" id="7_pjhco"]
+[ext_resource type="Texture2D" uid="uid://j3unxqslpa37" path="res://sprites/tituloU.png" id="8_qqt4o"]
+[ext_resource type="Shader" path="res://shader/TituloAnimDos.gdshader" id="9_hfqmb"]
+[ext_resource type="Texture2D" uid="uid://cff6rnohgaqyu" path="res://sprites/tituloTexto.png" id="10_nk2a5"]
+[ext_resource type="Shader" path="res://shader/TituloAnimStart.gdshader" id="11_0fixj"]
+[ext_resource type="Texture2D" uid="uid://b7rant5lr7q3r" path="res://sprites/tituloStart.png" id="12_rbyja"]
+[ext_resource type="Material" uid="uid://d0oueh25vp3n" path="res://shader/compositing.material" id="13_c2p8n"]
+[ext_resource type="AudioStream" uid="uid://nnivypo3iupw" path="res://sound/intro.wav" id="15_3tx61"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_22xmy"]
+shader = ExtResource("1_cunm4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khql0"]
+shader = ExtResource("3_lql01")
+shader_parameter/esperaInicial = 1.0
+shader_parameter/test = null
+shader_parameter/esperaClicC1 = 0.5
+shader_parameter/spriteC1 = ExtResource("5_dgu5b")
+shader_parameter/spriteU = ExtResource("8_qqt4o")
+shader_parameter/spriteB = ExtResource("4_jd26o")
+shader_parameter/spriteI = ExtResource("7_pjhco")
+shader_parameter/spriteC2 = ExtResource("6_tfojw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cclvu"]
+shader = ExtResource("9_hfqmb")
+shader_parameter/espera = 2.5
+shader_parameter/t = null
+shader_parameter/sprite = ExtResource("10_nk2a5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1048n"]
+shader = ExtResource("11_0fixj")
+
+[node name="StartMenu" type="Node2D"]
+script = ExtResource("1_uhk53")
+
+[node name="FondoBlanco" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_22xmy")
+position = Vector2(80, 72)
+scale = Vector2(1.25, 1.125)
+texture = ExtResource("2_6lwu1")
+
+[node name="TituloCubic" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_khql0")
+position = Vector2(80, 72)
+scale = Vector2(1.25, 1.125)
+texture = ExtResource("2_6lwu1")
+
+[node name="TituloAssembly" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cclvu")
+position = Vector2(80, 72)
+scale = Vector2(1.25, 1.125)
+texture = ExtResource("2_6lwu1")
+
+[node name="TituloStart" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1048n")
+position = Vector2(80, 72)
+texture = ExtResource("12_rbyja")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = ExtResource("13_c2p8n")
+offset_right = 160.0
+offset_bottom = 144.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_3tx61")
+autoplay = true
+bus = &"SFX"
